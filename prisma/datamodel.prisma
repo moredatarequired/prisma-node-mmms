@@ -1,0 +1,37 @@
+type Company @db(name: "companies") {
+  _id: ID! @id
+  address: String
+  companyName: String @db(name: "company_name")
+  contactEmail: String @db(name: "contact_email")
+  contactPhone: String @db(name: "contact_phone")
+  groupContracts: [Group!]! @relation(link: INLINE)
+}
+
+type Group @db(name: "groups") {
+  _id: ID! @id
+  company: Company!
+  endDate: DateTime @db(name: "end_date")
+  policies: [Policy!]! @relation(link: INLINE)
+  startDate: DateTime @db(name: "start_date")
+}
+
+type Policy @db(name: "policies") {
+  _id: ID! @id
+  beneficiaries: [Member!]! @relation(name: "BeneficiaryOnPolicy", link: INLINE)
+  endDate: DateTime @db(name: "end_date")
+  groupContract: Group!
+  startDate: DateTime @db(name: "start_date")
+  subscriber: Member! @relation(name: "SubscriberOnPolicy")
+}
+
+type Member @db(name: "members") {
+  _id: ID! @id
+  address: String
+  birthdate: DateTime
+  email: String @db(name: "mail")
+  name: String!
+  policies: [Policy!]! @relation(name: "SubscriberOnPolicy", link: INLINE)
+  gender: String! @db(name: "sex")
+  ssn: String!
+  beneficiaryOf: [Policy!]! @relation(name: "BeneficiaryOnPolicy")
+}

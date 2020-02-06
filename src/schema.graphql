@@ -1,0 +1,28 @@
+scalar DateTime
+
+type Query {
+  member(id: ID!): Member
+  policy(id: ID!): Policy
+  policies: [Policy!]!
+}
+
+type Member {
+  _id: ID!
+  address: String
+  birthdate: DateTime!
+  email: String
+  name: String!
+  policies: [Policy!]!
+  gender: String!
+  ssn: String!
+  beneficiaryOf: [Policy!]!
+}
+
+type Policy {
+  _id: ID!
+#   groupContract: Group!
+  subscriber: Member!
+  startDate: DateTime
+  endDate: DateTime
+  beneficiaries: [Member!]!
+}
