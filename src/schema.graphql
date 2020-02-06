@@ -3,26 +3,44 @@ scalar DateTime
 type Query {
   member(id: ID!): Member
   policy(id: ID!): Policy
-  policies: [Policy!]!
+  group(id: ID!): Group
+  company(id: ID!): Company
 }
 
 type Member {
   _id: ID!
-  address: String
-  birthdate: DateTime!
-  email: String
   name: String!
-  policies: [Policy!]!
-  gender: String!
+  birthdate: DateTime!
   ssn: String!
+  email: String
+  address: String
+  gender: String!
+  policies: [Policy!]!
   beneficiaryOf: [Policy!]!
 }
 
 type Policy {
   _id: ID!
-#   groupContract: Group!
+  groupContract: Group!
   subscriber: Member!
-  startDate: DateTime
-  endDate: DateTime
   beneficiaries: [Member!]!
+  startDate: DateTime!
+  endDate: DateTime
+}
+
+type Group {
+  _id: ID!
+  company: Company!
+  policies: [Policy!]!
+  startDate: DateTime!
+  endDate: DateTime
+}
+
+type Company {
+  _id: ID!
+  companyName: String
+  address: String
+  contactEmail: String
+  contactPhone: String
+  groupContracts: [Group!]!
 }
